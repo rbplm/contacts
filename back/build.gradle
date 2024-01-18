@@ -28,6 +28,10 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
 }
+bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    rootSpec.exclude("META-INF/MANIFEST.MF")
+}
 
 test {
     useJUnitPlatform()
