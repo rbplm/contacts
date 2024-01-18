@@ -11,7 +11,7 @@ public interface ContactRepository extends JpaRepository<ContactEntity, Integer>
 
     List<ContactEntity> findAll();
 
-    void deleteById(Integer id);
+
 
 
 }

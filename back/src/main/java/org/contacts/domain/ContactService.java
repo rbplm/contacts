@@ -13,6 +13,10 @@ public class ContactService {
     @Resource
     private ContactRepository contactRepository;
 
+    public void createContact(ContactEntity contactEntity) {
+        contactRepository.save(contactEntity);
+    }
+
     public List<ContactEntity> getAllContacts() {
         return contactRepository.findAll();
     }

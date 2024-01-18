@@ -18,6 +18,12 @@ public class ContactServices {
     @Resource
     private ContactEntityMapper contactMapper;
 
+    public void createContact(ContactDto contactDto) {
+        ContactEntity contactEntity = contactMapper.toEntity(contactDto);
+        contactService.createContact(contactEntity);
+    }
+
+
     public List<ContactDto> getAllContacts() {
         List<ContactEntity> contactList = contactService.getAllContacts();
         List<ContactDto> contactDtoList = new ArrayList<>();

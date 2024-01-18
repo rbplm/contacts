@@ -16,6 +16,18 @@ public class ContactsController {
     @Resource
     private ContactServices contactServices;
 
+    @PostMapping
+    @Operation(summary = "Create contact")
+    public void createContact(@RequestBody ContactDto contactDto) {
+        contactServices.createContact(contactDto);
+    }
+
+    @DeleteMapping("/id")
+    @Operation(summary = "Delete contact by id")
+    public void deleteContact(@RequestParam Integer id) {
+        contactServices.deleteContact(id);
+    }
+
 
     @GetMapping("/name")
     @Operation(summary = "Get contact by name")
@@ -28,11 +40,7 @@ public class ContactsController {
         return contactServices.getContact(name);
 
     }
-    @DeleteMapping("/id")
-    @Operation(summary = "Delete contact by id")
-    public void deleteContact(@RequestParam Integer id) {
-        contactServices.deleteContact(id);
-    }
+
 
 
 

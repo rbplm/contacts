@@ -1,20 +1,17 @@
 package org.contacts.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Entity
-@Table(name = "contacts_table")
+@Table(name = "contacts")
 public class ContactEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -26,8 +23,8 @@ public class ContactEntity {
     @Column(name = "code_name")
     private String codeName;
 
-    @Size(max = 15)
-    @Column(name = "phone_number", length = 15)
+    @Size(max = 20)
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
 }

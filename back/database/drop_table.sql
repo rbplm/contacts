@@ -1,1 +1,0 @@
-DROP table public.contacts_table;
