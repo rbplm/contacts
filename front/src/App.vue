@@ -1,4 +1,3 @@
-
 <script setup>
 import ContactsTable from "@/components/ContactsTable.vue";
 </script>
