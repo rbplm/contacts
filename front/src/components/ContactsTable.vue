@@ -4,9 +4,9 @@
     <div>
       <h1>Kontaktid</h1>
       <form @submit.prevent="fetchContacts">
-        <label for="name">Nimi</label>
         <input type="text" id="name" v-model="name"/>
-        <button type="submit">Otsi nime</button>
+        <button type="submit">Otsi</button>
+        <button @click="addContact">Lisa kontakt</button>
       </form>
         <table class="table table-dark">
           <thead>
@@ -22,7 +22,7 @@
             <td>{{ contact.name }}</td>
             <td>{{ contact.codeName }}</td>
             <td>{{ contact.phoneNumber }}</td>
-            <td><button @click="deleteContact(contact.id)">X</button></td>
+            <td><button id="delete_button" @click="deleteContact(contact.id)">X</button></td>
           </tr>
           </tbody>
         </table>
@@ -49,17 +49,41 @@ export default {
   },
 
   methods: {
+    async addContact() {
+      const name = prompt("Sisesta nimi");
+      const codeName = prompt("Sisesta koodnimi");
+      const phoneNumber = prompt("Sisesta telefoninumber");
+      if (this.contacts.some(contact => contact.name === name || contact.codeName === codeName)) {
+        alert("Kontakt juba eksisteerib");
+        return;
+      }
+      try {
+        await axios.post('http://localhost:8080/contact', {
+          name: name,
+          codeName: codeName,
+          phoneNumber: phoneNumber
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      await this.fetchAllContacts();
+    },
     async deleteContact(id) {
       if (!confirm("Kas oled kindel, et soovid kontakti kustutada?")) {
         return;
       }
       console.log(id);
       try {
-        await axios.delete(`http://localhost:8080/contact/id/${id}`);
-        this.fetchAllContacts();
+        await axios.delete('http://localhost:8080/contact/id',
+        {
+          params: {
+            id: id
+          }
+        });
       } catch (error) {
         console.error(error);
       }
+      await this.fetchAllContacts();
     },
     sortByName() {
       if (this.sort_direction) {
@@ -126,6 +150,18 @@ export default {
   border: none;
   color: #fff;
   padding-left: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding-top: 3px;
+}
+
+#delete_button {
+  background-color: firebrick;
+  border: none;
+  color: #fff;
+  margin-left: 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
